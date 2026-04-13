@@ -29,7 +29,14 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
           Powered by TMDB
         </a>
 
-        <form action={handleSubmit} className={css.form}>
+        <form
+  onSubmit={(e) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    handleSubmit(formData);
+  }}
+  className={css.form}
+>
           <input
             className={css.input}
             type="text"
