@@ -6,17 +6,6 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ onSubmit }: SearchBarProps) {
-  const handleSubmit = (formData: FormData) => {
-    const query = formData.get("query") as string;
-
-    if (!query || query.trim() === "") {
-      toast.error("Please enter your search query.");
-      return;
-    }
-
-    onSubmit(query);
-  };
-
   return (
     <header className={css.header}>
       <div className={css.container}>
@@ -30,22 +19,23 @@ export default function SearchBar({ onSubmit }: SearchBarProps) {
         </a>
 
         <form
-  onSubmit={(e) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    handleSubmit(formData);
-  }}
-  className={css.form}
->
+          action={(formData) => {
+            const query = formData.get("query") as string;
+
+            if (!query || !query.trim()) {
+              toast.error("Please enter your search query.");
+              return;
+            }
+
+            onSubmit(query.trim());
+          }}
+        >
           <input
             className={css.input}
             type="text"
             name="query"
-            autoComplete="off"
             placeholder="Search movies..."
-            autoFocus
           />
-
           <button className={css.button} type="submit">
             Search
           </button>

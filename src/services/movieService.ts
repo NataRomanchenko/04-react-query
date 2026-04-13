@@ -10,7 +10,9 @@ export const fetchMovies = async (
   query: string,
   page: number
 ): Promise<MoviesResponse> => {
-  const response = await axios.get("https://api.themoviedb.org/3/search/movie", {
+  const response = await axios.get<MoviesResponse>(
+  "https://api.themoviedb.org/3/search/movie",
+  {
     params: {
       query,
       page,
@@ -18,7 +20,8 @@ export const fetchMovies = async (
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
     },
-  });
+  }
+);
 
   return response.data;
 };

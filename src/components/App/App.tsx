@@ -24,9 +24,9 @@ export default function App() {
     queryKey: ["movies", query, page],
     queryFn: () => fetchMovies(query, page),
     enabled: !!query,
+    placeholderData: (previousData) => previousData,
   });
 
-  // ✅ БЕЗПЕЧНИЙ useEffect
   useEffect(() => {
     if (data?.results?.length === 0) {
       toast.error("No movies found for your request.");
@@ -68,7 +68,7 @@ export default function App() {
   <MovieGrid movies={data.results} onSelect={setSelectedMovie} />
 )}
 
-      {/* ✅ МОДАЛКА */}
+    
       {selectedMovie && (
         <MovieModal
           movie={selectedMovie}
